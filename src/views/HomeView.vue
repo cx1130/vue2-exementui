@@ -163,6 +163,7 @@ export default {
     },
     toggleBoxStyles(item) {
       this.selectedBoxDiv = item.id;
+      this.$router.push("about");
     },
     resetFilter(divNumber) {
       //当前选择变色
@@ -189,6 +190,7 @@ export default {
   margin-top: 10px;
   margin-bottom: 20px;
 }
+
 .box-target {
   height: 100px;
   background-color: #89cb27ff;
@@ -198,6 +200,7 @@ export default {
   margin-top: 10px;
   margin-bottom: 20px;
 }
+
 .box-head {
   height: 50px;
   background-color: #cdead3ff;
@@ -207,6 +210,7 @@ export default {
   margin-top: 10px;
   margin-bottom: 20px;
 }
+
 .box-head-target {
   height: 50px;
   background-color: #2ad2beff;
