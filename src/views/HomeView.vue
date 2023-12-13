@@ -172,7 +172,8 @@ export default {
       //选中
       this.selectedBoxDiv = item.id;
       //跳转
-      this.$router.push("about");
+      // this.$router.push("about");
+      this.$router.push({ name: "About", params: { id: item.id } });
     },
     resetFilter(divNumber) {
       //当前选择变色

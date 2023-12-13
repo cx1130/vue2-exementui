@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-row class="center-row">
+    <el-row :gutter="5" class="center-row">
       <!-- 左侧区域 -->
       <el-col :span="5">
         <div>
@@ -88,7 +88,6 @@
           </el-row>
         </div>
       </el-col>
-
       <!-- 右侧区域 -->
       <el-col :span="5">
         <div>
@@ -128,26 +127,33 @@
           >
         </div>
         <div>
-          <el-radio-group v-model="selectedValue" class="topbox">
-            <el-radio label="智能配图">智能配图</el-radio>
-          </el-radio-group>
-
-          <p>选择的值: {{ selectedValue }}</p>
+          <el-checkbox v-model="isChecked" class="topbox">智能配图</el-checkbox>
+          <p>选择的状态: {{ isChecked ? "已选中" : "未选中" }}</p>
         </div>
-
         <div>
           <el-button size="small" type="primary" class="topbox">生成</el-button>
         </div>
         <el-divider></el-divider>
-
         <div>
-          <!-- 文字展示框 -->
-          <el-input
-            v-model="textFromBackend"
-            :readonly="true"
-            class="topbox"
-          ></el-input>
-
+          <el-row :gutter="10">
+            <el-col :span="35">
+              <!-- 文字展示框 -->
+              <el-input
+                v-model="textFromBackend"
+                :readonly="true"
+                class="topbox"
+              ></el-input>
+            </el-col>
+            <el-col :span="1">
+              <el-button
+                size="small"
+                type="primary"
+                class="topbox"
+                @click="playRecording"
+                >播放录音</el-button
+              >
+            </el-col>
+          </el-row>
           <!-- 图片展示框 -->
           <el-image
             class="topbox"
@@ -168,7 +174,7 @@ export default {
   data() {
     return {
       //主体默认样式
-      selectedBoxDiv: "box",
+      selectedBoxDiv: this.$route.params.id,
       //主题选中样式
       selectedBoxStyle: "box-target",
       //输入框中内容
@@ -181,8 +187,10 @@ export default {
       audioChunks: [],
       //音频url
       audioUrl: null,
+      //音频播放
+      audioPlayer: null,
       //单选框
-      selectedValue: "",
+      isChecked: false,
       // 从后台返回的文字
       textFromBackend: "",
       // 从后台返回的图片 URL
@@ -253,6 +261,14 @@ export default {
         console.log("停止录音");
       }
     },
+    playRecording() {
+      if (this.audioUrl) {
+        if (!this.audioPlayer) {
+          this.audioPlayer = new Audio(this.audioUrl);
+        }
+        this.audioPlayer.play();
+      }
+    },
   },
 };
 </script>
@@ -286,9 +302,9 @@ export default {
   justify-content: center;
 }
 .upload {
-  margin-top: 25px;
+  margin-top: 15px;
 }
 .topbox {
-  margin-top: 25px;
+  margin-top: 15px;
 }
 </style>
