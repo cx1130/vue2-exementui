@@ -3,81 +3,81 @@
     <el-main>
       <el-row :gutter="5">
         <div
-            class="about-box"
-            :class="{ 'about-box-target': selectedBoxDiv === 1 }"
-            @click="toggleBoxStyles(1)"
+          class="about-box"
+          :class="{ 'about-box-target': selectedBoxDiv === 1 }"
+          @click="toggleBoxStyles(1)"
         >
           绝句
         </div>
       </el-row>
       <el-row :gutter="5">
         <div
-            class="about-box"
-            :class="{ 'about-box-target': selectedBoxDiv === 2 }"
-            @click="toggleBoxStyles(2)"
+          class="about-box"
+          :class="{ 'about-box-target': selectedBoxDiv === 2 }"
+          @click="toggleBoxStyles(2)"
         >
           律诗
         </div>
       </el-row>
       <el-row :gutter="5">
         <div
-            class="about-box"
-            :class="{ 'about-box-target': selectedBoxDiv === 3 }"
-            @click="toggleBoxStyles(3)"
+          class="about-box"
+          :class="{ 'about-box-target': selectedBoxDiv === 3 }"
+          @click="toggleBoxStyles(3)"
         >
           元曲
         </div>
       </el-row>
       <el-row :gutter="5">
         <div
-            class="about-box"
-            :class="{ 'about-box-target': selectedBoxDiv === 4 }"
-            @click="toggleBoxStyles(4)"
+          class="about-box"
+          :class="{ 'about-box-target': selectedBoxDiv === 4 }"
+          @click="toggleBoxStyles(4)"
         >
           风格绝句
         </div>
       </el-row>
       <el-row :gutter="5">
         <div
-            class="about-box"
-            :class="{ 'about-box-target': selectedBoxDiv === 5 }"
-            @click="toggleBoxStyles(5)"
+          class="about-box"
+          :class="{ 'about-box-target': selectedBoxDiv === 5 }"
+          @click="toggleBoxStyles(5)"
         >
           词
         </div>
       </el-row>
       <el-row :gutter="5">
         <div
-            class="about-box"
-            :class="{ 'about-box-target': selectedBoxDiv === 6 }"
-            @click="toggleBoxStyles(6)"
+          class="about-box"
+          :class="{ 'about-box-target': selectedBoxDiv === 6 }"
+          @click="toggleBoxStyles(6)"
         >
           对联
         </div>
       </el-row>
       <el-row :gutter="5">
         <div
-            class="about-box"
-            :class="{ 'about-box-target': selectedBoxDiv === 7 }"
-            @click="toggleBoxStyles(7)"
+          class="about-box"
+          :class="{ 'about-box-target': selectedBoxDiv === 7 }"
+          @click="toggleBoxStyles(7)"
         >
           朋友圈文案
         </div>
       </el-row>
       <el-row :gutter="5">
         <div
-            class="about-box"
-            :class="{ 'about-box-target': selectedBoxDiv === 8 }"
-            @click="toggleBoxStyles(8)"
+          class="about-box"
+          :class="{ 'about-box-target': selectedBoxDiv === 8 }"
+          @click="toggleBoxStyles(8)"
         >
           小红书标题
         </div>
       </el-row>
       <el-row :gutter="5">
         <div
-            class="about-box"
-            :class="{ 'about-box-target': selectedBoxDiv === 9 }"
-            @click="toggleBoxStyles(9)"
+          class="about-box"
+          :class="{ 'about-box-target': selectedBoxDiv === 9 }"
+          @click="toggleBoxStyles(9)"
         >
           小红书文案
         </div>
@@ -89,12 +89,15 @@
 export default {
   data() {
     return {
+      //主体默认样式
       selectedBoxDiv: "box",
+      //主题选中样式
       selectedBoxStyle: "box-target",
     };
   },
   methods: {
     toggleBoxStyles(divNumber) {
+      //选中样式
       this.selectedBoxDiv = divNumber;
     },
   },
