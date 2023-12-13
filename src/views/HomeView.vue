@@ -1,6 +1,6 @@
 <template>
-  <el-main>
-    <el-row :gutter="20">
+  <div>
+    <el-row :gutter="20" class="center-row">
       <el-col :span="6">
         <div
           class="box-head"
@@ -30,7 +30,7 @@
       </el-col>
     </el-row>
 
-    <el-row :gutter="20">
+    <el-row :gutter="20" class="center-row">
       <el-col :span="6">
         <div
           v-if="isItemInCategory(items[0])"
@@ -63,7 +63,7 @@
       </el-col>
     </el-row>
 
-    <el-row :gutter="20">
+    <el-row :gutter="20" class="center-row">
       <el-col :span="6">
         <div
           v-if="isItemInCategory(items[3])"
@@ -96,7 +96,7 @@
       </el-col>
     </el-row>
 
-    <el-row :gutter="20">
+    <el-row :gutter="20" class="center-row">
       <el-col :span="6">
         <div
           v-if="isItemInCategory(items[6])"
@@ -128,7 +128,7 @@
         </div>
       </el-col>
     </el-row>
-  </el-main>
+  </div>
 </template>
 
 <script>
@@ -229,5 +229,10 @@ export default {
   font-size: 18px;
   margin-top: 10px;
   margin-bottom: 20px;
+}
+.center-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>
