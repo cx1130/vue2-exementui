@@ -2,7 +2,7 @@
   <div>
     <el-row :gutter="5" class="center-row">
       <!-- 左侧区域 -->
-      <el-col :span="5">
+      <el-col :span="5" class="left-row">
         <div>
           <!-- 左侧内容放在这里 -->
           <el-row :gutter="5">
@@ -89,13 +89,16 @@
         </div>
       </el-col>
       <!-- 右侧区域 -->
-      <el-col :span="5">
+      <el-col :span="5" class="right-row">
         <div>
-          <el-input v-model="inputValue" placeholder="请输入内容"></el-input>
+          <el-input
+            v-model="inputValue"
+            placeholder="请输入内容"
+            class="input"
+          ></el-input>
         </div>
-        <div>
+        <div class="upload">
           <el-upload
-            class="upload"
             action="/your-upload-api"
             :show-file-list="false"
             :on-success="handleSuccess"
@@ -107,12 +110,8 @@
             </div>
           </el-upload>
         </div>
-        <div>
-          <el-button
-            size="small"
-            type="primary"
-            class="topbox"
-            @click="startRecording"
+        <div class="topbox">
+          <el-button size="small" type="primary" @click="startRecording"
             >开始录音</el-button
           >
           <el-button
@@ -126,30 +125,22 @@
             >下载录音文件</a
           >
         </div>
-        <div>
-          <el-checkbox v-model="isChecked" class="topbox">智能配图</el-checkbox>
+        <div class="topbox">
+          <el-checkbox v-model="isChecked">智能配图</el-checkbox>
           <p>选择的状态: {{ isChecked ? "已选中" : "未选中" }}</p>
         </div>
-        <div>
-          <el-button size="small" type="primary" class="topbox">生成</el-button>
+        <div class="topbox">
+          <el-button size="small" type="primary">生成</el-button>
         </div>
         <el-divider></el-divider>
-        <div>
+        <div class="topbox">
           <el-row :gutter="10">
             <el-col :span="35">
               <!-- 文字展示框 -->
-              <el-input
-                v-model="textFromBackend"
-                :readonly="true"
-                class="topbox"
-              ></el-input>
+              <el-input v-model="textFromBackend" :readonly="true"></el-input>
             </el-col>
             <el-col :span="1">
-              <el-button
-                size="small"
-                type="primary"
-                class="topbox"
-                @click="playRecording"
+              <el-button size="small" type="primary" @click="playRecording"
                 >播放录音</el-button
               >
             </el-col>
@@ -161,12 +152,12 @@
             :src="imageUrlFromBackend"
             style="width: 100px; height: 150px"
           ></el-image>
+          <div class="button-container">
+            <el-button type="primary" @click="goBack">返回上一页</el-button>
+          </div>
         </div>
       </el-col>
     </el-row>
-    <div class="button-container">
-      <el-button type="primary" @click="goBack">返回上一页</el-button>
-    </div>
   </div>
 </template>
 <script>
@@ -274,37 +265,52 @@ export default {
 </script>
 <style>
 .about-box {
-  height: 50px;
-  width: 150px;
+  flex: 1;
+  height: 100%;
+  width: 150%;
   background-color: #cdead3ff;
   text-align: center;
-  line-height: 50px;
-  font-size: 15px;
-  margin-top: 5px;
-  margin-bottom: 10px;
+  line-height: 300%;
+  font-size: 100%;
+  margin-top: 5%;
+  margin-bottom: 5%;
 }
 .about-box-target {
-  height: 50px;
-  width: 150px;
+  flex: 1;
+  height: 100%;
+  width: 150%;
   background-color: #89cb27ff;
   text-align: center;
-  line-height: 50px;
-  font-size: 15px;
-  margin-top: 5px;
-  margin-bottom: 10px;
+  line-height: 300%;
+  font-size: 100%;
+  margin-top: 5%;
+  margin-bottom: 5%;
 }
 .button-container {
+  width: 5%;
   text-align: center; /* 将按钮居中显示 */
   margin-top: 20px; /* 根据需要调整按钮容器的上边距 */
 }
 .center-row {
+  margin-top: 1%;
   display: flex;
-  justify-content: center;
+}
+.left-row {
+  width: 15%;
+}
+.right-row {
+  width: 50%;
+}
+.input {
+  display: flex;
+  width: 50%;
+  justify-content: space-between;
 }
 .upload {
-  margin-top: 15px;
+  display: flex;
+  margin-top: 2%;
 }
 .topbox {
-  margin-top: 15px;
+  margin-top: 2%;
 }
 </style>

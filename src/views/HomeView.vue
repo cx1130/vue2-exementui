@@ -193,47 +193,56 @@ export default {
 
 <style>
 .box {
-  height: 100px;
+  flex: 1;
+  height: 100%;
+  width: 100%;
   background-color: #cdead3ff;
   text-align: center;
-  line-height: 100px;
-  font-size: 18px;
-  margin-top: 10px;
-  margin-bottom: 20px;
+  line-height: 300%;
+  font-size: 110%;
+  margin-top: 10%;
+  margin-bottom: 10%;
 }
 
 .box-target {
-  height: 100px;
+  flex: 1;
+  height: 100%;
+  width: 100%;
   background-color: #89cb27ff;
   text-align: center;
-  line-height: 100px;
-  font-size: 18px;
-  margin-top: 10px;
-  margin-bottom: 20px;
+  line-height: 300%;
+  font-size: 110%;
+  margin-top: 10%;
+  margin-bottom: 10%;
 }
 
 .box-head {
-  height: 50px;
-  background-color: #cdead3ff;
+  flex: 1;
+  height: 100%;
+  width: 100%;
+  background-color: #0bf697;
   text-align: center;
-  line-height: 50px;
-  font-size: 18px;
-  margin-top: 10px;
-  margin-bottom: 20px;
+  line-height: 300%;
+  font-size: 120%;
+  margin-top: 10%;
+  margin-bottom: 10%;
 }
 
 .box-head-target {
-  height: 50px;
-  background-color: #2ad2beff;
+  flex: 1;
+  height: 100%;
+  width: 100%;
+  background-color: #0bc0f5;
   text-align: center;
-  line-height: 50px;
-  font-size: 18px;
-  margin-top: 10px;
-  margin-bottom: 20px;
+  line-height: 300%;
+  font-size: 120%;
+  margin-top: 10%;
+  margin-bottom: 10%;
 }
 .center-row {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  margin-top: 1%;
 }
 </style>
