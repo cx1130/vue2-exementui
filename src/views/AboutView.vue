@@ -130,7 +130,9 @@
           <p>选择的状态: {{ isChecked ? "已选中" : "未选中" }}</p>
         </div>
         <div class="topbox">
-          <el-button size="small" type="primary">生成</el-button>
+          <el-button @click="genStr" size="small" type="primary"
+            >生成</el-button
+          >
         </div>
         <el-divider></el-divider>
         <div class="topbox">
@@ -161,6 +163,8 @@
   </div>
 </template>
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {
@@ -259,6 +263,34 @@ export default {
         }
         this.audioPlayer.play();
       }
+    },
+    genStr() {
+      // 将'your-api-endpoint'替换为实际的API端点URL
+      const apiUrl = "/Gen/test1";
+
+      // 将'your-data'替换为要在请求体中发送的数据
+      const postData = {
+        genType: this.inputValue,
+        userText: this.selectedBoxDiv,
+      };
+
+      axios
+        .post(apiUrl, postData, {
+          withCredentials: true, // 允许跨域携带cookie
+          headers: {
+            "Content-Type": "application/json", // 设置请求头为 JSON
+            // 你可能还需要其他的请求头，比如 token 等，根据你的实际需求添加
+          },
+        })
+        .then((response) => {
+          // 处理成功的响应
+          this.textFromBackend = response.data.result;
+          console.log("响应:", response.data);
+        })
+        .catch((error) => {
+          // 处理错误
+          console.error("错误:", error);
+        });
     },
   },
 };
