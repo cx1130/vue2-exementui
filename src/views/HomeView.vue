@@ -33,6 +33,11 @@
     <el-row :gutter="20" class="center-row">
       <el-col :span="6">
         <div
+          :style="{
+            backgroundImage: 'url(' + require('@/public/jueju.png') + ')',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }"
           v-if="isItemInCategory(items[0])"
           class="box"
           :class="{ 'box-target': selectedBoxDiv === 1 }"
@@ -43,6 +48,11 @@
       </el-col>
       <el-col :span="6">
         <div
+          :style="{
+            backgroundImage: 'url(' + require('@/public/lvshi.png') + ')',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }"
           v-if="isItemInCategory(items[1])"
           class="box"
           :class="{ 'box-target': selectedBoxDiv === 2 }"
@@ -53,6 +63,11 @@
       </el-col>
       <el-col :span="6">
         <div
+          :style="{
+            backgroundImage: 'url(' + require('@/public/yuanqu.png') + ')',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }"
           v-if="isItemInCategory(items[2])"
           class="box"
           :class="{ 'box-target': selectedBoxDiv === 3 }"
@@ -66,6 +81,11 @@
     <el-row :gutter="20" class="center-row">
       <el-col :span="6">
         <div
+          :style="{
+            backgroundImage: 'url(' + require('@/public/fengyan.png') + ')',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }"
           v-if="isItemInCategory(items[3])"
           class="box"
           :class="{ 'box-target': selectedBoxDiv === 4 }"
@@ -76,6 +96,11 @@
       </el-col>
       <el-col :span="6">
         <div
+          :style="{
+            backgroundImage: 'url(' + require('@/public/ci.png') + ')',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }"
           v-if="isItemInCategory(items[4])"
           class="box"
           :class="{ 'box-target': selectedBoxDiv === 5 }"
@@ -86,6 +111,11 @@
       </el-col>
       <el-col :span="6">
         <div
+          :style="{
+            backgroundImage: 'url(' + require('@/public/duilian.png') + ')',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }"
           v-if="isItemInCategory(items[5])"
           class="box"
           :class="{ 'box-target': selectedBoxDiv === 6 }"
@@ -99,6 +129,11 @@
     <el-row :gutter="20" class="center-row">
       <el-col :span="6">
         <div
+          :style="{
+            backgroundImage: 'url(' + require('@/public/pengyouquan.png') + ')',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }"
           v-if="isItemInCategory(items[6])"
           class="box"
           :class="{ 'box-target': selectedBoxDiv === 7 }"
@@ -109,6 +144,11 @@
       </el-col>
       <el-col :span="6">
         <div
+          :style="{
+            backgroundImage: 'url(' + require('@/public/xiaohongshu.png') + ')',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }"
           v-if="isItemInCategory(items[7])"
           class="box"
           :class="{ 'box-target': selectedBoxDiv === 8 }"
@@ -119,6 +159,12 @@
       </el-col>
       <el-col :span="6">
         <div
+          :style="{
+            backgroundImage:
+              'url(' + require('@/public/xiaohongshuwenan.png') + ')',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }"
           v-if="isItemInCategory(items[8])"
           class="box"
           :class="{ 'box-target': selectedBoxDiv === 9 }"
@@ -199,11 +245,11 @@ export default {
   background-color: #cdead3ff;
   text-align: center;
   line-height: 300%;
-  font-size: 110%;
+  font-size: 300%;
   margin-top: 10%;
   margin-bottom: 10%;
+  color: rgba(0, 0, 0, 0.5);
 }
-
 .box-target {
   flex: 1;
   height: 100%;

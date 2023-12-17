@@ -16,6 +16,9 @@ module.exports = defineConfig({
   runtimeCompiler: true,
   configureWebpack: {
     resolve: {
+      alias: {
+        "@": require("path").resolve(__dirname, ""),
+      },
       extensions: [".tsx", ".ts", ".js", ".json"],
       fallback: {
         fs: false,
