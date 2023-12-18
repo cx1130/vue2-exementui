@@ -133,13 +133,20 @@
           <el-button @click="genStr" size="small" type="primary"
             >生成</el-button
           >
+
+          <loading ref="loading"></loading>
         </div>
         <el-divider></el-divider>
         <div class="topbox">
           <el-row :gutter="10">
             <el-col :span="35">
               <!-- 文字展示框 -->
-              <el-input v-model="textFromBackend" :readonly="true"></el-input>
+              <el-input
+                v-model="textFromBackend"
+                :readonly="true"
+                type="textarea"
+                :rows="5"
+              ></el-input>
             </el-col>
             <el-col :span="1">
               <el-button size="small" type="primary" @click="playRecording"
@@ -265,6 +272,18 @@ export default {
       }
     },
     genStr() {
+      // 在请求数据之前显示 Loading 遮罩
+      this.$refs.loading.showLoading();
+
+      // 模拟异步请求数据
+      setTimeout(() => {
+        // 请求完成后隐藏 Loading 遮罩
+        this.$refs.loading.hideLoading();
+        // 处理获取到的数据
+        this.textFromBackend =
+          "如梦令\n" + "大雪飞来\n" + "人未醉，心先醉\n" + "坐间一觉，觉后千回";
+      }, 2000);
+
       // 将'your-api-endpoint'替换为实际的API端点URL
       const apiUrl = "/Gen/test1";
 
@@ -274,23 +293,23 @@ export default {
         userText: this.selectedBoxDiv,
       };
 
-      axios
-        .post(apiUrl, postData, {
-          withCredentials: true, // 允许跨域携带cookie
-          headers: {
-            "Content-Type": "application/json", // 设置请求头为 JSON
-            // 你可能还需要其他的请求头，比如 token 等，根据你的实际需求添加
-          },
-        })
-        .then((response) => {
-          // 处理成功的响应
-          this.textFromBackend = response.data.result;
-          console.log("响应:", response.data);
-        })
-        .catch((error) => {
-          // 处理错误
-          console.error("错误:", error);
-        });
+      // axios
+      //   .post(apiUrl, postData, {
+      //     withCredentials: true, // 允许跨域携带cookie
+      //     headers: {
+      //       "Content-Type": "application/json", // 设置请求头为 JSON
+      //       // 你可能还需要其他的请求头，比如 token 等，根据你的实际需求添加
+      //     },
+      //   })
+      //   .then((response) => {
+      //     // 处理成功的响应
+      //     this.textFromBackend = response.data.result;
+      //     console.log("响应:", response.data);
+      //   })
+      //   .catch((error) => {
+      //     // 处理错误
+      //     console.error("错误:", error);
+      //   });
     },
   },
 };
@@ -324,8 +343,10 @@ export default {
   margin-top: 20px; /* 根据需要调整按钮容器的上边距 */
 }
 .center-row {
-  margin-top: 1%;
   display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1%;
 }
 .left-row {
   width: 15%;

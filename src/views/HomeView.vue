@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <el-row :gutter="20" class="center-row">
-      <el-col :span="6">
+  <div class="body">
+    <el-row :gutter="4" class="center-row-home">
+      <el-col :span="4">
         <div
           class="box-head"
           :class="{ 'box-head-target': selectedHeadDiv === 1 }"
@@ -10,7 +10,7 @@
           全部
         </div>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="4">
         <div
           class="box-head"
           :class="{ 'box-head-target': selectedHeadDiv === 2 }"
@@ -19,7 +19,7 @@
           诗词歌赋
         </div>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="4">
         <div
           class="box-head"
           :class="{ 'box-head-target': selectedHeadDiv === 3 }"
@@ -30,8 +30,8 @@
       </el-col>
     </el-row>
 
-    <el-row :gutter="20" class="center-row">
-      <el-col :span="6">
+    <el-row :gutter="4" class="center-row-home">
+      <el-col :span="4">
         <div
           :style="{
             backgroundImage: 'url(' + require('@/public/jueju.png') + ')',
@@ -46,7 +46,7 @@
           绝句
         </div>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="4">
         <div
           :style="{
             backgroundImage: 'url(' + require('@/public/lvshi.png') + ')',
@@ -61,7 +61,7 @@
           律诗
         </div>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="4">
         <div
           :style="{
             backgroundImage: 'url(' + require('@/public/yuanqu.png') + ')',
@@ -78,8 +78,8 @@
       </el-col>
     </el-row>
 
-    <el-row :gutter="20" class="center-row">
-      <el-col :span="6">
+    <el-row :gutter="4" class="center-row-home">
+      <el-col :span="4">
         <div
           :style="{
             backgroundImage: 'url(' + require('@/public/fengyan.png') + ')',
@@ -94,7 +94,7 @@
           风格绝句
         </div>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="4">
         <div
           :style="{
             backgroundImage: 'url(' + require('@/public/ci.png') + ')',
@@ -109,10 +109,10 @@
           词
         </div>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="4">
         <div
           :style="{
-            backgroundImage: 'url(' + require('@/public/duilian.png') + ')',
+            backgroundImage: 'url(' + require('@/public/dl.png') + ')',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }"
@@ -126,8 +126,8 @@
       </el-col>
     </el-row>
 
-    <el-row :gutter="20" class="center-row">
-      <el-col :span="6">
+    <el-row :gutter="4" class="center-row-home">
+      <el-col :span="4">
         <div
           :style="{
             backgroundImage: 'url(' + require('@/public/pengyouquan.png') + ')',
@@ -142,7 +142,7 @@
           朋友圈文案
         </div>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="4">
         <div
           :style="{
             backgroundImage: 'url(' + require('@/public/xiaohongshu.png') + ')',
@@ -157,7 +157,7 @@
           小红书标题
         </div>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="4">
         <div
           :style="{
             backgroundImage:
@@ -239,56 +239,42 @@ export default {
 
 <style>
 .box {
-  flex: 1;
-  height: 100%;
-  width: 100%;
-  background-color: #cdead3ff;
-  text-align: center;
+  //background-color: #cdead3ff;
   line-height: 300%;
   font-size: 300%;
-  margin-top: 10%;
-  margin-bottom: 10%;
-  color: rgba(0, 0, 0, 0.5);
+  margin-top: 1%;
+  margin-bottom: 1%;
+  color: rgba(0, 0, 0, 1);
 }
 .box-target {
-  flex: 1;
-  height: 100%;
-  width: 100%;
-  background-color: #89cb27ff;
-  text-align: center;
+  //background-color: #89cb27ff;
   line-height: 300%;
-  font-size: 110%;
-  margin-top: 10%;
-  margin-bottom: 10%;
+  font-size: 300%;
+  margin-top: 1%;
+  margin-bottom: 1%;
 }
 
 .box-head {
-  flex: 1;
-  height: 100%;
-  width: 100%;
   background-color: #0bf697;
-  text-align: center;
   line-height: 300%;
   font-size: 120%;
-  margin-top: 10%;
+  margin-top: 20%;
   margin-bottom: 10%;
 }
 
 .box-head-target {
-  flex: 1;
-  height: 100%;
-  width: 100%;
   background-color: #0bc0f5;
-  text-align: center;
   line-height: 300%;
   font-size: 120%;
-  margin-top: 10%;
+  margin-top: 20%;
   margin-bottom: 10%;
 }
-.center-row {
+.center-row-home {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-top: 1%;
+  justify-content: center; /* 水平居中 */
+}
+.body {
+  text-align: center;
 }
 </style>
