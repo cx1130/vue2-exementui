@@ -145,7 +145,7 @@
                 v-model="textFromBackend"
                 :readonly="true"
                 type="textarea"
-                :rows="5"
+                :rows="4"
               ></el-input>
             </el-col>
             <el-col :span="1">
