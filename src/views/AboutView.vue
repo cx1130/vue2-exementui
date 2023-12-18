@@ -203,8 +203,8 @@ export default {
     // 模拟从后台获取数据
     // 这里你需要替换成实际从后台获取数据的逻辑
     this.textFromBackend = "文字内容从后台获取";
-    this.imageUrlFromBackend =
-      "https://www.unchartedwaters.cn/static/barMM/beihaimm2.jpg";
+    // this.imageUrlFromBackend =
+    //   "https://www.unchartedwaters.cn/static/barMM/beihaimm2.jpg";
   },
   methods: {
     toggleBoxStyles(divNumber) {
@@ -282,7 +282,8 @@ export default {
         // 处理获取到的数据
         this.textFromBackend =
           "如梦令\n" + "大雪飞来\n" + "人未醉，心先醉\n" + "坐间一觉，觉后千回";
-      }, 2000);
+        this.imageUrlFromBackend = require("@/public/cx.png");
+      }, 10000);
 
       // 将'your-api-endpoint'替换为实际的API端点URL
       const apiUrl = "/Gen/test1";
