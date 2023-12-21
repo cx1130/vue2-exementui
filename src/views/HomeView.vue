@@ -242,16 +242,16 @@ export default {
   //background-color: #cdead3ff;
   line-height: 300%;
   font-size: 300%;
-  margin-top: 1%;
-  margin-bottom: 1%;
+  margin-top: 5%;
+  margin-bottom: 5%;
   color: rgba(0, 0, 0, 1);
 }
 .box-target {
   //background-color: #89cb27ff;
   line-height: 300%;
   font-size: 300%;
-  margin-top: 1%;
-  margin-bottom: 1%;
+  margin-top: 5%;
+  margin-bottom: 5%;
 }
 
 .box-head {

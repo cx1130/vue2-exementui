@@ -153,14 +153,16 @@
                 >播放录音</el-button
               >
             </el-col>
+            <el-col :span="35">
+              <!-- 图片展示框 -->
+              <el-image
+                class="topbox"
+                v-if="imageUrlFromBackend"
+                :src="imageUrlFromBackend"
+                style="width: 30%; height: 50%"
+              ></el-image>
+            </el-col>
           </el-row>
-          <!-- 图片展示框 -->
-          <el-image
-            class="topbox"
-            v-if="imageUrlFromBackend"
-            :src="imageUrlFromBackend"
-            style="width: 100px; height: 150px"
-          ></el-image>
           <div class="button-container">
             <el-button type="primary" @click="goBack">返回上一页</el-button>
           </div>
@@ -283,7 +285,7 @@ export default {
         this.textFromBackend =
           "如梦令\n" + "大雪飞来\n" + "人未醉，心先醉\n" + "坐间一觉，觉后千回";
         this.imageUrlFromBackend = require("@/public/cx.png");
-      }, 10000);
+      }, 1000);
 
       // 将'your-api-endpoint'替换为实际的API端点URL
       const apiUrl = "/Gen/test1";
@@ -317,47 +319,45 @@ export default {
 </script>
 <style>
 .about-box {
-  flex: 1;
-  height: 100%;
-  width: 150%;
+  width: 200%;
   background-color: #cdead3ff;
   text-align: center;
   line-height: 300%;
   font-size: 100%;
-  margin-top: 5%;
-  margin-bottom: 5%;
+  margin-bottom: 10%;
 }
 .about-box-target {
-  flex: 1;
-  height: 100%;
-  width: 150%;
+  width: 200%;
   background-color: #89cb27ff;
   text-align: center;
   line-height: 300%;
   font-size: 100%;
-  margin-top: 5%;
-  margin-bottom: 5%;
+  margin-bottom: 10%;
 }
 .button-container {
   width: 5%;
   text-align: center; /* 将按钮居中显示 */
-  margin-top: 20px; /* 根据需要调整按钮容器的上边距 */
+  margin-top: 5%; /* 根据需要调整按钮容器的上边距 */
 }
 .center-row {
+  margin-top: 2%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-top: 1%;
+  justify-content: center;
 }
 .left-row {
-  width: 15%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20%;
 }
 .right-row {
-  width: 50%;
+  justify-content: center;
+  width: 30%;
 }
 .input {
   display: flex;
-  width: 50%;
+  width: 100%;
   justify-content: space-between;
 }
 .upload {
