@@ -156,11 +156,10 @@
         </div>
       </el-col>
       <el-col :span="5" class="right-row">
-        <div class="upload">
+        <div @click="handleUploadClick" class="upload">
           <el-upload
-            action="/your-upload-api"
+            action="''"
             :show-file-list="false"
-            :on-success="handleSuccess"
             :before-upload="beforeUpload"
           >
             <img
@@ -215,7 +214,19 @@ export default {
       textFromBackend: "",
       // 从后台返回的图片 URL
       imageUrlFromBackend: "",
+      //image
+      image: "",
+      //audioBlob
+      audioBlob: "",
     };
+  },
+  mounted() {
+    // 确保 this.$refs.upload 初始化后再执行点击事件
+    if (this.$refs.upload) {
+      const inputElement =
+        this.$refs.upload.$el.querySelector("input[type=file]");
+      inputElement.addEventListener("click", this.handleUploadClick);
+    }
   },
   created() {
     // 模拟从后台获取数据
@@ -225,6 +236,14 @@ export default {
     //   "https://www.unchartedwaters.cn/static/barMM/beihaimm2.jpg";
   },
   methods: {
+    handleUploadClick() {
+      // 触发 el-upload 的点击事件
+      if (this.$refs.upload) {
+        const inputElement =
+          this.$refs.upload.$el.querySelector("input[type=file]");
+        inputElement.click();
+      }
+    },
     toggleBoxStyles(divNumber) {
       //选中样式
       this.selectedBoxDiv = divNumber;
@@ -232,26 +251,29 @@ export default {
     goBack() {
       this.$router.back();
     },
-    handleSuccess(response, file) {
-      console.log("上传成功", response, file);
-      // 在这里可以处理上传成功后的逻辑
-      this.imageUrlFromBackend = URL.createObjectURL(file.raw);
-    },
     beforeUpload(file) {
       const isJPG = file.type === "image/jpeg" || file.type === "image/png";
       const isLt2M = file.size / 1024 / 1024 < 2;
 
       if (!isJPG) {
         this.$message.error("只能上传jpg/png文件！");
+        return;
       }
       if (!isLt2M) {
         this.$message.error("文件大小不能超过2M！");
+        return;
       }
-
+      // 使用 $nextTick 来确保在 DOM 更新之后执行
+      // 读取文件的二进制数据并存储在 image 中
+      this.$nextTick(() => {
+        this.imageUrlFromBackend = URL.createObjectURL(file);
+        this.image = file;
+      });
       return isJPG && isLt2M;
     },
     async startRecording() {
       try {
+        this.audioUrl = null;
         const stream = await navigator.mediaDevices.getUserMedia({
           audio: true,
         });
@@ -264,8 +286,8 @@ export default {
         };
 
         this.mediaRecorder.onstop = () => {
-          const audioBlob = new Blob(this.audioChunks, { type: "audio/wav" });
-          this.audioUrl = URL.createObjectURL(audioBlob);
+          this.audioBlob = new Blob(this.audioChunks, { type: "audio/wav" });
+          this.audioUrl = URL.createObjectURL(this.audioBlob);
           console.log("录音完成，音频URL：", this.audioUrl);
         };
 
@@ -311,6 +333,8 @@ export default {
       const postData = {
         genType: this.inputValue,
         userText: this.selectedBoxDiv,
+        image: this.image,
+        audio: this.audioBlob,
       };
 
       // axios
@@ -322,6 +346,8 @@ export default {
       //     },
       //   })
       //   .then((response) => {
+      //     // 请求完成后隐藏 Loading 遮罩
+      //     this.$refs.loading.hideLoading();
       //     // 处理成功的响应
       //     this.textFromBackend = response.data.result;
       //     console.log("响应:", response.data);
