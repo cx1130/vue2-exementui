@@ -89,26 +89,13 @@
         </div>
       </el-col>
       <!-- 右侧区域 -->
-      <el-col :span="5" class="right-row">
+      <el-col :span="5" class="middle-row">
         <div>
           <el-input
             v-model="inputValue"
             placeholder="请输入内容"
             class="input"
           ></el-input>
-        </div>
-        <div class="upload">
-          <el-upload
-            action="/your-upload-api"
-            :show-file-list="false"
-            :on-success="handleSuccess"
-            :before-upload="beforeUpload"
-          >
-            <el-button size="small" type="primary">上传图片</el-button>
-            <div slot="tip" class="el-upload__tip">
-              只能上传jpg/png文件，且不超过500kb
-            </div>
-          </el-upload>
         </div>
         <div class="topbox">
           <el-button size="small" type="primary" @click="startRecording"
@@ -168,6 +155,35 @@
           </div>
         </div>
       </el-col>
+      <el-col :span="5" class="right-row">
+        <div class="upload">
+          <el-upload
+            action="/your-upload-api"
+            :show-file-list="false"
+            :on-success="handleSuccess"
+            :before-upload="beforeUpload"
+          >
+            <img
+              v-if="!imageUrlFromBackend"
+              src="@/public/placeholder.png"
+              alt="Placeholder"
+              class="upload-placeholder"
+            />
+            <img
+              v-else
+              :src="imageUrlFromBackend"
+              alt="Uploaded Image"
+              class="uploaded-image"
+            />
+            <div class="upload-text" v-if="!imageUrlFromBackend">
+              点击上传图片
+            </div>
+            <div slot="tip" class="el-upload__tip">
+              只能上传jpg/png文件，且不超过2M
+            </div>
+          </el-upload>
+        </div>
+      </el-col>
     </el-row>
   </div>
 </template>
@@ -219,19 +235,20 @@ export default {
     handleSuccess(response, file) {
       console.log("上传成功", response, file);
       // 在这里可以处理上传成功后的逻辑
+      this.imageUrlFromBackend = URL.createObjectURL(file.raw);
     },
     beforeUpload(file) {
       const isJPG = file.type === "image/jpeg" || file.type === "image/png";
-      const isLt500K = file.size / 1024 < 500;
+      const isLt2M = file.size / 1024 / 1024 < 2;
 
       if (!isJPG) {
         this.$message.error("只能上传jpg/png文件！");
       }
-      if (!isLt500K) {
-        this.$message.error("文件大小不能超过500KB！");
+      if (!isLt2M) {
+        this.$message.error("文件大小不能超过2M！");
       }
 
-      return isJPG && isLt500K;
+      return isJPG && isLt2M;
     },
     async startRecording() {
       try {
@@ -342,7 +359,7 @@ export default {
 .center-row {
   margin-top: 2%;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
 }
 .left-row {
@@ -351,13 +368,18 @@ export default {
   justify-content: center;
   width: 20%;
 }
-.right-row {
+.middle-row {
   justify-content: center;
   width: 30%;
 }
+.right-row {
+  display: flex;
+  align-items: flex-start;
+  width: 10%;
+}
 .input {
   display: flex;
-  width: 100%;
+  width: 50%;
   justify-content: space-between;
 }
 .upload {
@@ -366,5 +388,23 @@ export default {
 }
 .topbox {
   margin-top: 2%;
+}
+.upload-placeholder {
+  width: 200px; /* 上传区域的宽度 */
+  height: 150px; /* 上传区域的高度 */
+  border: 2px dashed #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.uploaded-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 保持图片的宽高比例并裁剪 */
+  border-radius: 5px;
+}
+.upload-text {
+  text-align: center;
+  margin-top: 10px;
+  color: #999;
 }
 </style>
