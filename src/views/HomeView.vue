@@ -33,47 +33,59 @@
     <el-row :gutter="4" class="center-row-home">
       <el-col :span="4">
         <div
-          :style="{
-            backgroundImage: 'url(' + require('@/public/jueju.png') + ')',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }"
           v-if="isItemInCategory(items[0])"
-          class="box"
-          :class="{ 'box-target': selectedBoxDiv === 1 }"
           @click="toggleBoxStyles(items[0])"
         >
-          绝句
+          <div
+            :style="{
+              backgroundImage: 'url(' + require('@/public/jueju.png') + ')',
+              backgroundSize: 'contain',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              margin: 'auto',
+            }"
+            class="box"
+            :class="{ 'box-target': selectedBoxDiv === 1 }"
+          ></div>
+          <div class="image-caption">绝句</div>
         </div>
       </el-col>
       <el-col :span="4">
         <div
-          :style="{
-            backgroundImage: 'url(' + require('@/public/lvshi.png') + ')',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }"
           v-if="isItemInCategory(items[1])"
-          class="box"
-          :class="{ 'box-target': selectedBoxDiv === 2 }"
           @click="toggleBoxStyles(items[1])"
         >
-          律诗
+          <div
+            :style="{
+              backgroundImage: 'url(' + require('@/public/lvshi.png') + ')',
+              backgroundSize: 'contain',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              margin: 'auto',
+            }"
+            class="box"
+            :class="{ 'box-target': selectedBoxDiv === 2 }"
+          ></div>
+          <div class="image-caption">律诗</div>
         </div>
       </el-col>
       <el-col :span="4">
         <div
-          :style="{
-            backgroundImage: 'url(' + require('@/public/yuanqu.png') + ')',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }"
           v-if="isItemInCategory(items[2])"
-          class="box"
-          :class="{ 'box-target': selectedBoxDiv === 3 }"
           @click="toggleBoxStyles(items[2])"
         >
-          元曲
+          <div
+            :style="{
+              backgroundImage: 'url(' + require('@/public/yuanqu.png') + ')',
+              backgroundSize: 'contain',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              margin: 'auto',
+            }"
+            class="box"
+            :class="{ 'box-target': selectedBoxDiv === 3 }"
+          ></div>
+          <div class="image-caption">元曲</div>
         </div>
       </el-col>
     </el-row>
@@ -81,47 +93,59 @@
     <el-row :gutter="4" class="center-row-home">
       <el-col :span="4">
         <div
-          :style="{
-            backgroundImage: 'url(' + require('@/public/fengyan.png') + ')',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }"
           v-if="isItemInCategory(items[3])"
-          class="box"
-          :class="{ 'box-target': selectedBoxDiv === 4 }"
           @click="toggleBoxStyles(items[3])"
         >
-          风格绝句
+          <div
+            :style="{
+              backgroundImage: 'url(' + require('@/public/fengge.png') + ')',
+              backgroundSize: 'contain',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              margin: 'auto',
+            }"
+            class="box"
+            :class="{ 'box-target': selectedBoxDiv === 4 }"
+          ></div>
+          <div class="image-caption">风格绝句</div>
         </div>
       </el-col>
       <el-col :span="4">
         <div
-          :style="{
-            backgroundImage: 'url(' + require('@/public/ci.png') + ')',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }"
           v-if="isItemInCategory(items[4])"
-          class="box"
-          :class="{ 'box-target': selectedBoxDiv === 5 }"
           @click="toggleBoxStyles(items[4])"
         >
-          词
+          <div
+            :style="{
+              backgroundImage: 'url(' + require('@/public/songci.png') + ')',
+              backgroundSize: 'contain',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              margin: 'auto',
+            }"
+            class="box"
+            :class="{ 'box-target': selectedBoxDiv === 5 }"
+          ></div>
+          <div class="image-caption">宋词</div>
         </div>
       </el-col>
       <el-col :span="4">
         <div
-          :style="{
-            backgroundImage: 'url(' + require('@/public/dl.png') + ')',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }"
           v-if="isItemInCategory(items[5])"
-          class="box"
-          :class="{ 'box-target': selectedBoxDiv === 6 }"
           @click="toggleBoxStyles(items[5])"
         >
-          对联
+          <div
+            :style="{
+              backgroundImage: 'url(' + require('@/public/duilian1.png') + ')',
+              backgroundSize: 'contain',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              margin: 'auto',
+            }"
+            class="box"
+            :class="{ 'box-target': selectedBoxDiv === 6 }"
+          ></div>
+          <div class="image-caption">对联</div>
         </div>
       </el-col>
     </el-row>
@@ -129,48 +153,62 @@
     <el-row :gutter="4" class="center-row-home">
       <el-col :span="4">
         <div
-          :style="{
-            backgroundImage: 'url(' + require('@/public/pengyouquan.png') + ')',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }"
           v-if="isItemInCategory(items[6])"
-          class="box"
-          :class="{ 'box-target': selectedBoxDiv === 7 }"
           @click="toggleBoxStyles(items[6])"
         >
-          朋友圈文案
+          <div
+            :style="{
+              backgroundImage:
+                'url(' + require('@/public/pengyouquan.png') + ')',
+              backgroundSize: 'contain',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              margin: 'auto',
+            }"
+            class="box"
+            :class="{ 'box-target': selectedBoxDiv === 7 }"
+          ></div>
+          <div class="image-caption">朋友圈文案</div>
         </div>
       </el-col>
       <el-col :span="4">
         <div
-          :style="{
-            backgroundImage: 'url(' + require('@/public/xiaohongshu.png') + ')',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }"
           v-if="isItemInCategory(items[7])"
-          class="box"
-          :class="{ 'box-target': selectedBoxDiv === 8 }"
           @click="toggleBoxStyles(items[7])"
         >
-          小红书标题
+          <div
+            :style="{
+              backgroundImage:
+                'url(' + require('@/public/xiaohongshu.png') + ')',
+              backgroundSize: 'contain',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              margin: 'auto',
+            }"
+            class="box"
+            :class="{ 'box-target': selectedBoxDiv === 8 }"
+          ></div>
+          <div class="image-caption">小红书标题</div>
         </div>
       </el-col>
       <el-col :span="4">
         <div
-          :style="{
-            backgroundImage:
-              'url(' + require('@/public/xiaohongshuwenan.png') + ')',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }"
           v-if="isItemInCategory(items[8])"
-          class="box"
-          :class="{ 'box-target': selectedBoxDiv === 9 }"
           @click="toggleBoxStyles(items[8])"
         >
-          小红书文案
+          <div
+            :style="{
+              backgroundImage:
+                'url(' + require('@/public/xiaohongshu.png') + ')',
+              backgroundSize: 'contain',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              margin: 'auto',
+            }"
+            class="box"
+            :class="{ 'box-target': selectedBoxDiv === 9 }"
+          ></div>
+          <div class="image-caption">小红书文案</div>
         </div>
       </el-col>
     </el-row>
@@ -239,21 +277,29 @@ export default {
 
 <style>
 .box {
-  //background-color: #cdead3ff;
-  line-height: 300%;
-  font-size: 300%;
+  width: 100px; /* 容器的宽度 */
+  height: 80px; /* 容器的高度 */
+  //line-height: 300%;
+  //font-size: 300%;
   margin-top: 5%;
   margin-bottom: 5%;
-  color: rgba(0, 0, 0, 1);
+  //color: rgba(0, 0, 0, 0.5);
+  position: relative;
 }
 .box-target {
   //background-color: #89cb27ff;
-  line-height: 300%;
-  font-size: 300%;
+  width: 100px; /* 容器的宽度 */
+  height: 80px; /* 容器的高度 */
   margin-top: 5%;
   margin-bottom: 5%;
+  position: relative;
 }
-
+.image-caption {
+  color: rgba(0, 0, 0, 0.5);
+  padding: 8px; /* 文字容器的内边距 */
+  text-align: center;
+  margin-bottom: 5%;
+}
 .box-head {
   background-color: #0bf697;
   line-height: 300%;

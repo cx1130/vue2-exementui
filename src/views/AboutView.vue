@@ -47,7 +47,7 @@
               :class="{ 'about-box-target': selectedBoxDiv === 5 }"
               @click="toggleBoxStyles(5)"
             >
-              词
+              宋词
             </div>
           </el-row>
           <el-row :gutter="5">
