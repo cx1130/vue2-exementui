@@ -163,18 +163,18 @@
             :before-upload="beforeUpload"
           >
             <img
-              v-if="!imageUrlFromBackend"
+              v-if="!imageURLFromUpload"
               src="@/public/placeholder.png"
               alt="Placeholder"
               class="upload-placeholder"
             />
             <img
               v-else
-              :src="imageUrlFromBackend"
+              :src="imageURLFromUpload"
               alt="Uploaded Image"
               class="uploaded-image"
             />
-            <div class="upload-text" v-if="!imageUrlFromBackend">
+            <div class="upload-text" v-if="!imageURLFromUpload">
               点击上传图片
             </div>
             <div slot="tip" class="el-upload__tip">
@@ -212,6 +212,8 @@ export default {
       isChecked: false,
       // 从后台返回的文字
       textFromBackend: "",
+      //前台上传图片 URL
+      imageURLFromUpload: "",
       // 从后台返回的图片 URL
       imageUrlFromBackend: "",
       //image
@@ -230,8 +232,11 @@ export default {
   },
   created() {
     // 模拟从后台获取数据
-    // 这里你需要替换成实际从后台获取数据的逻辑
-    this.textFromBackend = "文字内容从后台获取";
+    this.textFromBackend =
+      "九月重阳菊未花\n" +
+      "日边初报赤城霞\n" +
+      "王孙自是多思情\n" +
+      "旋制茱萸当酒家";
     // this.imageUrlFromBackend =
     //   "https://www.unchartedwaters.cn/static/barMM/beihaimm2.jpg";
   },
@@ -266,14 +271,16 @@ export default {
       // 使用 $nextTick 来确保在 DOM 更新之后执行
       // 读取文件的二进制数据并存储在 image 中
       this.$nextTick(() => {
-        this.imageUrlFromBackend = URL.createObjectURL(file);
+        this.imageURLFromUpload = URL.createObjectURL(file);
         this.image = file;
       });
       return isJPG && isLt2M;
     },
     async startRecording() {
       try {
+        //重置
         this.audioUrl = null;
+        this.audioBlob = null;
         const stream = await navigator.mediaDevices.getUserMedia({
           audio: true,
         });
@@ -287,7 +294,7 @@ export default {
 
         this.mediaRecorder.onstop = () => {
           this.audioBlob = new Blob(this.audioChunks, { type: "audio/wav" });
-          this.audioUrl = URL.createObjectURL(this.audioBlob);
+          // this.audioUrl = URL.createObjectURL(this.audioBlob);
           console.log("录音完成，音频URL：", this.audioUrl);
         };
 
@@ -305,6 +312,7 @@ export default {
       }
     },
     playRecording() {
+      this.fetchAudio();
       if (this.audioUrl) {
         if (!this.audioPlayer) {
           this.audioPlayer = new Audio(this.audioUrl);
@@ -317,45 +325,77 @@ export default {
       this.$refs.loading.showLoading();
 
       // 模拟异步请求数据
-      setTimeout(() => {
-        // 请求完成后隐藏 Loading 遮罩
-        this.$refs.loading.hideLoading();
-        // 处理获取到的数据
-        this.textFromBackend =
-          "如梦令\n" + "大雪飞来\n" + "人未醉，心先醉\n" + "坐间一觉，觉后千回";
-        this.imageUrlFromBackend = require("@/public/cx.png");
-      }, 1000);
+      // setTimeout(() => {
+      //   // 请求完成后隐藏 Loading 遮罩
+      //   this.$refs.loading.hideLoading();
+      //   // 处理获取到的数据
+      //   this.textFromBackend =
+      //     "如梦令\n" + "大雪飞来\n" + "人未醉，心先醉\n" + "坐间一觉，觉后千回";
+      //   this.imageUrlFromBackend = require("@/public/cx.png");
+      // }, 1000);
 
-      // 将'your-api-endpoint'替换为实际的API端点URL
+      // 生成接口URL
       const apiUrl = "/Gen/test1";
 
-      // 将'your-data'替换为要在请求体中发送的数据
+      // 请求参数
       const postData = {
+        //类别
         genType: this.inputValue,
+        //文本
         userText: this.selectedBoxDiv,
+        //图片
         image: this.image,
+        //语音
         audio: this.audioBlob,
       };
 
-      // axios
-      //   .post(apiUrl, postData, {
-      //     withCredentials: true, // 允许跨域携带cookie
-      //     headers: {
-      //       "Content-Type": "application/json", // 设置请求头为 JSON
-      //       // 你可能还需要其他的请求头，比如 token 等，根据你的实际需求添加
-      //     },
-      //   })
-      //   .then((response) => {
-      //     // 请求完成后隐藏 Loading 遮罩
-      //     this.$refs.loading.hideLoading();
-      //     // 处理成功的响应
-      //     this.textFromBackend = response.data.result;
-      //     console.log("响应:", response.data);
-      //   })
-      //   .catch((error) => {
-      //     // 处理错误
-      //     console.error("错误:", error);
-      //   });
+      axios
+        .post(apiUrl, postData, {
+          withCredentials: true, // 允许跨域携带cookie
+          headers: {
+            "Content-Type": "application/json", // 设置请求头为 JSON
+          },
+          timeout: 60000, //超时时间60秒
+        })
+        .then((response) => {
+          // 请求完成后隐藏 Loading 遮罩
+          this.$refs.loading.hideLoading();
+          // 处理响应文本
+          this.textFromBackend = response.data.result;
+          //处理相应图片
+          this.imageUrlFromBackend =
+            "data:image/png;base64," + response.data.image;
+          console.log("响应:", response.data);
+        })
+        .catch((error) => {
+          // 处理错误
+          console.error("error get result:", error);
+        });
+    },
+    fetchAudio() {
+      //文本生成语音URL
+      const apiUrl = "/Gen/test2";
+      // 请求参数
+      const postData = {
+        //文本
+        text: this.textFromBackend,
+      };
+      //发送请求到后端获取音频数据（假设后端返回的是 base64 编码的字符串）
+      axios
+        .post(apiUrl, postData, {
+          withCredentials: true, // 允许跨域携带cookie
+          headers: {
+            "Content-Type": "application/json", // 设置请求头为 JSON
+          },
+          timeout: 60000, //超时时间60秒
+        })
+        .then((response) => {
+          //处理音频
+          this.audioUrl = "data:audio/mpeg;base64," + response.data.audio;
+        })
+        .catch((error) => {
+          console.error("Error fetching audio:", error);
+        });
     },
   },
 };
