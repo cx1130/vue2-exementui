@@ -217,9 +217,9 @@ export default {
       // 从后台返回的图片 URL
       imageUrlFromBackend: "",
       //image
-      image: "",
+      image: null,
       //audioBlob
-      audioBlob: "",
+      audioBlob: null,
     };
   },
   mounted() {
@@ -272,7 +272,11 @@ export default {
       // 读取文件的二进制数据并存储在 image 中
       this.$nextTick(() => {
         this.imageURLFromUpload = URL.createObjectURL(file);
-        this.image = file;
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.image = reader.result;
+        };
+        reader.readAsDataURL(file);
       });
       return isJPG && isLt2M;
     },
@@ -335,19 +339,42 @@ export default {
       // }, 1000);
 
       // 生成接口URL
-      const apiUrl = "/Gen/test1";
+      const apiUrl = "/Gen/multiGen";
 
+      let flag = 0;
+
+      if (this.image === null && this.audioBlob === null) {
+        flag = 1;
+      } else if (this.image !== null && this.audioBlob === null) {
+        flag = 2;
+      } else if (this.image === null && this.audioBlob !== null) {
+        flag = 3;
+      } else {
+        flag = 4;
+      }
+
+      const postData = new FormData();
+      postData.append("genType", this.selectedBoxDiv);
+      postData.append("userText", this.inputValue);
+      postData.append("image", this.image);
+      postData.append("audio", this.audioBlob);
+      postData.append("flag", flag);
+      postData.append("check", this.isChecked);
       // 请求参数
-      const postData = {
-        //类别
-        genType: this.inputValue,
-        //文本
-        userText: this.selectedBoxDiv,
-        //图片
-        image: this.image,
-        //语音
-        audio: this.audioBlob,
-      };
+      // const postData = {
+      //   //类别
+      //   //genType: this.inputValue,
+      //   genType: this.selectedBoxDiv,
+      //   //文本
+      //   //userText: this.selectedBoxDiv,
+      //   userText: this.inputValue,
+      //   //图片
+      //   image: this.image,
+      //   //语音
+      //   audio: this.audioBlob,
+      //   //flag
+      //   flag: "1",
+      // };
 
       axios
         .post(apiUrl, postData, {
@@ -358,6 +385,7 @@ export default {
           timeout: 60000, //超时时间60秒
         })
         .then((response) => {
+          console.log("-----" + postData);
           // 请求完成后隐藏 Loading 遮罩
           this.$refs.loading.hideLoading();
           // 处理响应文本

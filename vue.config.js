@@ -3,13 +3,14 @@ module.exports = defineConfig({
   devServer: {
     proxy: {
       "/api": {
-        target: "http://localhost:8888",
+        target: "http://localhost:52556",
         changeOrigin: true,
         pathRewrite: {
           "^/api": "",
         },
       },
     },
+    // port: 8000,
   },
   publicPath: "./",
   transpileDependencies: true,
