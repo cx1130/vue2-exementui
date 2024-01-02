@@ -283,8 +283,6 @@ export default {
     async startRecording() {
       try {
         //重置
-        this.audioUrl = null;
-        this.audioBlob = null;
         const stream = await navigator.mediaDevices.getUserMedia({
           audio: true,
         });
@@ -296,12 +294,6 @@ export default {
           }
         };
 
-        this.mediaRecorder.onstop = () => {
-          this.audioBlob = new Blob(this.audioChunks, { type: "audio/wav" });
-          // this.audioUrl = URL.createObjectURL(this.audioBlob);
-          console.log("录音完成，音频URL：", this.audioUrl);
-        };
-
         this.mediaRecorder.start();
         this.isRecording = true;
       } catch (error) {
@@ -310,7 +302,13 @@ export default {
     },
     stopRecording() {
       if (this.mediaRecorder && this.isRecording) {
+        this.mediaRecorder.onstop = () => {
+          this.audioBlob = new Blob(this.audioChunks, { type: "audio/wav" });
+          // this.audioUrl = URL.createObjectURL(this.audioBlob);
+          console.log("录音完成，音频URL：", this.audioBlob);
+        };
         this.mediaRecorder.stop();
+        this.audioChunks = [];
         this.isRecording = false;
         console.log("停止录音");
       }
@@ -328,16 +326,6 @@ export default {
       // 在请求数据之前显示 Loading 遮罩
       this.$refs.loading.showLoading();
 
-      // 模拟异步请求数据
-      // setTimeout(() => {
-      //   // 请求完成后隐藏 Loading 遮罩
-      //   this.$refs.loading.hideLoading();
-      //   // 处理获取到的数据
-      //   this.textFromBackend =
-      //     "如梦令\n" + "大雪飞来\n" + "人未醉，心先醉\n" + "坐间一觉，觉后千回";
-      //   this.imageUrlFromBackend = require("@/public/cx.png");
-      // }, 1000);
-
       // 生成接口URL
       const apiUrl = "/Gen/multiGen";
 
@@ -353,6 +341,7 @@ export default {
         flag = 4;
       }
 
+      // 请求参数
       const postData = new FormData();
       postData.append("genType", this.selectedBoxDiv);
       postData.append("userText", this.inputValue);
@@ -360,27 +349,12 @@ export default {
       postData.append("audio", this.audioBlob);
       postData.append("flag", flag);
       postData.append("check", this.isChecked);
-      // 请求参数
-      // const postData = {
-      //   //类别
-      //   //genType: this.inputValue,
-      //   genType: this.selectedBoxDiv,
-      //   //文本
-      //   //userText: this.selectedBoxDiv,
-      //   userText: this.inputValue,
-      //   //图片
-      //   image: this.image,
-      //   //语音
-      //   audio: this.audioBlob,
-      //   //flag
-      //   flag: "1",
-      // };
 
       axios
         .post(apiUrl, postData, {
           withCredentials: true, // 允许跨域携带cookie
           headers: {
-            "Content-Type": "application/json", // 设置请求头为 JSON
+            "Content-Type": "multipart/form-data", // 设置请求头为 JSON
           },
           timeout: 60000, //超时时间60秒
         })
@@ -402,7 +376,7 @@ export default {
     },
     fetchAudio() {
       //文本生成语音URL
-      const apiUrl = "/Gen/test2";
+      const apiUrl = "/Gen/textForAudio";
       // 请求参数
       const postData = {
         //文本
@@ -419,11 +393,28 @@ export default {
         })
         .then((response) => {
           //处理音频
-          this.audioUrl = "data:audio/mpeg;base64," + response.data.audio;
+          try {
+            const audioData = this.arrayBufferToBase64(response.data.result);
+            console.log("audioData:" + audioData);
+            const player = new Audio();
+            player.src = audioData;
+            player.play();
+          } catch (error) {
+            console.log("播放失败:" + error);
+          }
         })
         .catch((error) => {
           console.error("Error fetching audio:", error);
         });
+    },
+    arrayBufferToBase64(buffer) {
+      // 将 ArrayBuffer 转换为 Base64 字符串
+      let binary = "";
+      const bytes = new Uint8Array(buffer);
+      for (let i = 0; i < bytes.byteLength; i++) {
+        binary += String.fromCharCode(bytes[i]);
+      }
+      return btoa(binary);
     },
   },
 };
