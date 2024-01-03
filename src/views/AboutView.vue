@@ -315,12 +315,6 @@ export default {
     },
     playRecording() {
       this.fetchAudio();
-      if (this.audioUrl) {
-        if (!this.audioPlayer) {
-          this.audioPlayer = new Audio(this.audioUrl);
-        }
-        this.audioPlayer.play();
-      }
     },
     genStr() {
       // 在请求数据之前显示 Loading 遮罩
@@ -394,11 +388,13 @@ export default {
         .then((response) => {
           //处理音频
           try {
-            const audioData = this.arrayBufferToBase64(response.data.result);
-            console.log("audioData:" + audioData);
-            const player = new Audio();
-            player.src = audioData;
-            player.play();
+            this.audioUrl = "data:audio/mpeg;base64," + response.data.result;
+            if (this.audioUrl) {
+              if (!this.audioPlayer) {
+                this.audioPlayer = new Audio(this.audioUrl);
+              }
+              this.audioPlayer.play();
+            }
           } catch (error) {
             console.log("播放失败:" + error);
           }
@@ -406,15 +402,6 @@ export default {
         .catch((error) => {
           console.error("Error fetching audio:", error);
         });
-    },
-    arrayBufferToBase64(buffer) {
-      // 将 ArrayBuffer 转换为 Base64 字符串
-      let binary = "";
-      const bytes = new Uint8Array(buffer);
-      for (let i = 0; i < bytes.byteLength; i++) {
-        binary += String.fromCharCode(bytes[i]);
-      }
-      return btoa(binary);
     },
   },
 };
