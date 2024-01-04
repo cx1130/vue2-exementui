@@ -188,6 +188,7 @@
 </template>
 <script>
 import axios from "axios";
+import Recorder from "js-audio-recorder";
 
 export default {
   data() {
@@ -220,6 +221,7 @@ export default {
       image: null,
       //audioBlob
       audioBlob: null,
+      recorder: null,
     };
   },
   mounted() {
@@ -280,46 +282,55 @@ export default {
       });
       return isJPG && isLt2M;
     },
-    async startRecording() {
-      try {
-        //重置
-        const mediaStreamConstraints = {
-          audio: {
-            channelCount: 1,
-            sampleRate: 16000,
-            sampleSize: 16,
-          },
-        };
-        const stream = await navigator.mediaDevices.getUserMedia(
-          mediaStreamConstraints
-        );
-        this.mediaRecorder = new MediaRecorder(stream);
-        this.mediaRecorder.simpleRate = 16000;
-        this.audioChunks = [];
-        this.mediaRecorder.ondataavailable = (event) => {
-          if (event.data.size > 0) {
-            this.audioChunks.push(event.data);
-          }
-        };
-
-        this.mediaRecorder.start();
-        this.isRecording = true;
-      } catch (error) {
-        console.error("获取麦克风权限失败或不支持录音功能：", error);
-      }
+    startRecording() {
+      // try {
+      //重置
+      //   const mediaStreamConstraints = {
+      //     audio: {
+      //       // channelCount: 1,
+      //       sampleRate: 16000,
+      //       // sampleSize: 16,
+      //     },
+      //   };
+      //   const stream = await navigator.mediaDevices.getUserMedia(
+      //     mediaStreamConstraints
+      //   );
+      //   this.mediaRecorder = new MediaRecorder(stream);
+      //   this.mediaRecorder.simpleRate = 16000;
+      //   this.audioChunks = [];
+      //   this.mediaRecorder.ondataavailable = (event) => {
+      //     if (event.data.size > 0) {
+      //       this.audioChunks.push(event.data);
+      //     }
+      //   };
+      //
+      //   this.mediaRecorder.start();
+      //   this.isRecording = true;
+      // } catch (error) {
+      //   console.error("获取麦克风权限失败或不支持录音功能：", error);
+      // }
+      this.recorder = new Recorder({
+        sampleBits: 16,
+        sampleRate: 16000,
+        numChannels: 1,
+        compiling: false,
+      });
+      this.recorder.start();
     },
     stopRecording() {
-      if (this.mediaRecorder && this.isRecording) {
-        this.mediaRecorder.onstop = () => {
-          this.audioBlob = new Blob(this.audioChunks, { type: "audio/wav" });
-          this.audioUrl = URL.createObjectURL(this.audioBlob);
-          console.log("录音完成，音频URL：", this.audioBlob);
-        };
-        this.mediaRecorder.stop();
-        this.audioChunks = [];
-        this.isRecording = false;
-        console.log("停止录音");
-      }
+      // if (this.mediaRecorder && this.isRecording) {
+      //   this.mediaRecorder.onstop = () => {
+      //     this.audioBlob = new Blob(this.audioChunks, { type: "audio/wav" });
+      //     this.audioUrl = URL.createObjectURL(this.audioBlob);
+      //     console.log("录音完成，音频URL：", this.audioBlob);
+      //   };
+      //   this.mediaRecorder.stop();
+      //   this.audioChunks = [];
+      //   this.isRecording = false;
+      //   console.log("停止录音");
+      // }
+      this.recorder.stop();
+      this.audioBlob = this.recorder.getWAVBlob();
     },
     playRecording() {
       this.fetchAudio();
@@ -348,7 +359,7 @@ export default {
       postData.append("genType", this.selectedBoxDiv);
       postData.append("userText", this.inputValue);
       postData.append("image", this.image);
-      postData.append("audio", this.audioBlob);
+      postData.append("audio", this.audioBlob, "recording.wav");
       postData.append("flag", flag);
       postData.append("check", this.isChecked);
 
