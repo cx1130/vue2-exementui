@@ -2,7 +2,7 @@
   "name": "vue-element-example",
   "version": "0.1.0",
   "private": true,
-  "description": "Vue2 和 ElementUI demo",
+  "description": "Vue2 和 ElementUI",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -21,6 +21,7 @@
     "jsqr": "^1.4.0",
     "jszip": "^3.10.1",
     "lodash-es": "^4.17.21",
+    "recorder-js": "^1.0.7",
     "streamsaver": "^2.0.6",
     "vue": "^2.6.14",
     "vue-router": "^3.5.1",

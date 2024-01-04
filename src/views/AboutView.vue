@@ -283,10 +283,18 @@ export default {
     async startRecording() {
       try {
         //重置
-        const stream = await navigator.mediaDevices.getUserMedia({
-          audio: true,
-        });
+        const mediaStreamConstraints = {
+          audio: {
+            channelCount: 1,
+            sampleRate: 16000,
+            sampleSize: 16,
+          },
+        };
+        const stream = await navigator.mediaDevices.getUserMedia(
+          mediaStreamConstraints
+        );
         this.mediaRecorder = new MediaRecorder(stream);
+        this.mediaRecorder.simpleRate = 16000;
         this.audioChunks = [];
         this.mediaRecorder.ondataavailable = (event) => {
           if (event.data.size > 0) {
@@ -304,7 +312,7 @@ export default {
       if (this.mediaRecorder && this.isRecording) {
         this.mediaRecorder.onstop = () => {
           this.audioBlob = new Blob(this.audioChunks, { type: "audio/wav" });
-          // this.audioUrl = URL.createObjectURL(this.audioBlob);
+          this.audioUrl = URL.createObjectURL(this.audioBlob);
           console.log("录音完成，音频URL：", this.audioBlob);
         };
         this.mediaRecorder.stop();
