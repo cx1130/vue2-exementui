@@ -200,12 +200,6 @@ export default {
       selectedBoxStyle: "box-target",
       //输入框中内容
       inputValue: "",
-      //录音
-      mediaRecorder: null,
-      //是否增在录音
-      isRecording: false,
-      //音频存储
-      audioChunks: [],
       //音频url
       audioUrl: null,
       //音频播放
@@ -222,6 +216,7 @@ export default {
       image: null,
       //audioBlob
       audioBlob: null,
+      //录音
       recorder: null,
     };
   },
