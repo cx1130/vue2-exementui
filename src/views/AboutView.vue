@@ -189,6 +189,7 @@
 <script>
 import axios from "axios";
 import Recorder from "js-audio-recorder";
+import { MessageBox } from "element-ui";
 
 export default {
   data() {
@@ -239,8 +240,6 @@ export default {
       "日边初报赤城霞\n" +
       "王孙自是多思情\n" +
       "旋制茱萸当酒家";
-    // this.imageUrlFromBackend =
-    //   "https://www.unchartedwaters.cn/static/barMM/beihaimm2.jpg";
   },
   methods: {
     handleUploadClick() {
@@ -283,32 +282,6 @@ export default {
       return isJPG && isLt2M;
     },
     startRecording() {
-      // try {
-      //重置
-      //   const mediaStreamConstraints = {
-      //     audio: {
-      //       // channelCount: 1,
-      //       sampleRate: 16000,
-      //       // sampleSize: 16,
-      //     },
-      //   };
-      //   const stream = await navigator.mediaDevices.getUserMedia(
-      //     mediaStreamConstraints
-      //   );
-      //   this.mediaRecorder = new MediaRecorder(stream);
-      //   this.mediaRecorder.simpleRate = 16000;
-      //   this.audioChunks = [];
-      //   this.mediaRecorder.ondataavailable = (event) => {
-      //     if (event.data.size > 0) {
-      //       this.audioChunks.push(event.data);
-      //     }
-      //   };
-      //
-      //   this.mediaRecorder.start();
-      //   this.isRecording = true;
-      // } catch (error) {
-      //   console.error("获取麦克风权限失败或不支持录音功能：", error);
-      // }
       this.recorder = new Recorder({
         sampleBits: 16,
         sampleRate: 16000,
@@ -318,17 +291,6 @@ export default {
       this.recorder.start();
     },
     stopRecording() {
-      // if (this.mediaRecorder && this.isRecording) {
-      //   this.mediaRecorder.onstop = () => {
-      //     this.audioBlob = new Blob(this.audioChunks, { type: "audio/wav" });
-      //     this.audioUrl = URL.createObjectURL(this.audioBlob);
-      //     console.log("录音完成，音频URL：", this.audioBlob);
-      //   };
-      //   this.mediaRecorder.stop();
-      //   this.audioChunks = [];
-      //   this.isRecording = false;
-      //   console.log("停止录音");
-      // }
       this.recorder.stop();
       this.audioBlob = this.recorder.getWAVBlob();
     },
@@ -385,6 +347,8 @@ export default {
         .catch((error) => {
           // 处理错误
           console.error("error get result:", error);
+          this.$refs.loading.hideLoading();
+          MessageBox.alert("请求失败:" + error.message);
         });
     },
     fetchAudio() {
@@ -406,20 +370,19 @@ export default {
         })
         .then((response) => {
           //处理音频
-          try {
-            this.audioUrl = "data:audio/mpeg;base64," + response.data.result;
-            if (this.audioUrl) {
-              if (!this.audioPlayer) {
-                this.audioPlayer = new Audio(this.audioUrl);
-              }
-              this.audioPlayer.play();
+
+          this.audioUrl = "data:audio/mpeg;base64," + response.data.result;
+          if (this.audioUrl) {
+            if (!this.audioPlayer) {
+              this.audioPlayer = new Audio(this.audioUrl);
             }
-          } catch (error) {
-            console.log("播放失败:" + error);
+            this.audioPlayer.play();
           }
         })
         .catch((error) => {
           console.error("Error fetching audio:", error);
+          this.$refs.loading.hideLoading();
+          MessageBox.alert("请求失败:" + error.message);
         });
     },
   },
